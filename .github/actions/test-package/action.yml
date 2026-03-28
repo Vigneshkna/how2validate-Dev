@@ -19,10 +19,12 @@ runs:
       id: run_tests
       shell: bash
       working-directory: ./src/python/tests
+      env:
+        TEST_COMMAND: ${{ inputs.test-command }}
       run: |
         set -e
-        echo "::notice::Running tests with: ${{ inputs.test-command }}"
-        if bash -lc "${{ inputs.test-command }}"; then
+        echo "::notice::Running tests with: $TEST_COMMAND"
+        if bash -lc "$TEST_COMMAND"; then
           echo "::notice::Tests passed!"
           echo "tests_passed=true" >> "$GITHUB_OUTPUT"
         else
